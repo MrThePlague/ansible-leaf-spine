@@ -51,19 +51,19 @@ Edit the inventory.ini to list your devices, and group them as you please, but e
 The entire fabric can be deployed and/or updated by calling the main `deploy-fabric.yml` playbook.
 
 ```
-$ ansible-playbook -i <inventory>.ini -u <username> -k --ask-vault-pass deploy-fabric.yml
+$ ansible-playbook -i <inventory>.ini -u <username> -k deploy-fabric.yml
 ```
 
 Individual functions (spine/leaf/border) can be deployed by using the function-specific playbook, e.g.:
 
 ```
-$ ansible-playbook -i <inventory>.ini -u <username> -k --ask-vault-pass deploy-spine.yml
+$ ansible-playbook -i <inventory>.ini -u <username> -k deploy-spine.yml
 ```
 
 And specific subsections of the configuration can be called by utilising the playbook tags, for example the below will deploy only NTP-related configuration to all devices within the fabric.:
 
 ```
-$ ansible-playbook -i <inventory>.ini -u <username> -k --ask-vault-pass deploy-fabric.yml -t ntp
+$ ansible-playbook -i <inventory>.ini -u <username> -k deploy-fabric.yml -t ntp
 ```
 
 ## Feature Requests and To-Do
