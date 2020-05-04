@@ -1,0 +1,47 @@
+---
+- name: Set base interface configuration
+  nxos_interfaces:
+    config: "{{ new_interfaces }}"
+    state: merged
+  tags: interfaces
+
+- name: Disable IP redirects
+  nxos_config:
+    lines:
+      - no ip redirects
+      - no ipv6 redirects
+    parents: "interface {{ item.key }}"
+  with_dict:
+    - "{{ interfaces }}"
+  when: item.value.mode != "layer2" and item.key != "Loopback0"
+  tags: interfaces
+
+- name: Enable BFD
+  nxos_config:
+    lines:
+      - bfd interval 300 min_rx 300 multiplier 3
+      - bfd slow-timer 5000
+  tags: bfd, interfaces
+
+- name: Enable BFD interfaces
+  nxos_bfd_interfaces:
+    config: "{{ bfd_interfaces }}"
+  tags: bfd, interfaces
+
+- name: Configure interface descriptions
+  nxos_interfaces:
+    config:
+      - name: "{{ item.key }}"
+        description: "{{ item.value.0.host }} - {{ item.value.0.port }}"
+    state: merged
+  with_dict: "{{ ansible_net_neighbors }}"
+  when: ansible_network_os == 'nxos' and item.key != "mgmt0"
+  tags: interfaces, int_descriptions
+
+- name: Configure interface description of Management interface
+  nxos_interfaces:
+    config:
+      - name: mgmt0
+        description: "Management Interface"
+    state: merged
+  when: ansible_network_os == 'nxos'

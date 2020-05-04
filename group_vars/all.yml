@@ -1,0 +1,51 @@
+---
+
+local_admin_username: customeradmin
+local_admin_password: password
+
+timezone:
+  standard: UTC
+  offset: 0
+
+domain_name: example.org
+domain_search:
+  - example.org
+  - ns.example.org
+
+name_servers:
+  - 1.1.1.1
+  - 1.1.1.2
+
+ntp_servers:
+  - pool.ntp.org
+  - time.cloudflare.com
+  - ntp.yycix.ca
+
+syslog:
+  server1:
+    hostname: syslog.example.org
+    port: 21514 # Example non-standard port used for Syslog
+    level: 6
+    vrf: management
+
+snmp_community: public
+snmp_username: SNMP_USERNAME
+snmp_password: snmppassword
+snmp_host: 10.1.1.1
+snmp_location: Your Data Centre
+
+aaa_method:
+  vty: VTY
+  console: CONSOLE
+  http: HTTP
+
+tacacs:
+  group: ISE-CLUSTER
+  servers:
+      - 10.1.2.1
+      - 10.1.2.2
+  key: tacacskey
+
+ospf_key: ospfkey
+
+bgp_key: ospfkey

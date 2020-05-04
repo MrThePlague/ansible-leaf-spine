@@ -1,0 +1,10 @@
+---
+
+# Configure Leaf Switches
+- hosts: leaf
+  roles:
+    - base
+    - ospf
+    - vpc
+    - vlans
+    - hsrp

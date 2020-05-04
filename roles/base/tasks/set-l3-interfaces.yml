@@ -1,0 +1,7 @@
+---
+
+- name: Configure Layer3 interface addressing
+  nxos_l3_interfaces:
+    config: "{{ new_l3_interfaces }}"
+    state: replaced
+  tags: l3_interfaces

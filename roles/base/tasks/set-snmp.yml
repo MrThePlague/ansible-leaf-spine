@@ -1,0 +1,46 @@
+---
+
+- name: Set SNMP community
+  nxos_snmp_community:
+    community: "{{ snmp_community }}"
+    group: network-operator
+    state: absent
+  tags: snmp
+
+- name: Set SNMP location
+  nxos_snmp_location:
+    location: "{{ snmp_location }}"
+    state: present
+  tags: snmp
+
+- name: Set SNMPv3 user for SolarWinds NMS
+  nxos_snmp_user:
+    user: "{{ snmp_username }}"
+    group: network-operator
+    authentication: sha
+    pwd: "{{ snmp_password }}"
+    encrypt: yes
+    privacy: "{{ snmp_password }}"
+    state: present
+  changed_when: false
+  tags: snmp
+
+- name: Set SNMPv3 traps
+  nxos_snmp_traps:
+    group: "{{ item }}"
+    state: enabled
+  loop: "{{ snmp_traps }}"
+  tags: snmp
+
+- name: Set SNMP host
+  nxos_snmp_host:
+    snmp_host: "{{ snmp_host }}"
+    version: v3
+    community: SNMP_SOLARWINDS
+    v3: priv
+    src_intf: mgmt0
+    vrf: management
+    snmp_type: trap
+    state: present
+  tags: snmp
+      

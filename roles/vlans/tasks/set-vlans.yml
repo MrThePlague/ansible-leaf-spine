@@ -1,0 +1,7 @@
+---
+
+- name: Configure VLANS
+  nxos_vlans:
+    config: "{{ vlans }}"
+    state: merged
+  tags: vlans

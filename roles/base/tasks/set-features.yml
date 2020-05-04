@@ -1,0 +1,9 @@
+---
+
+- name: Enable role-specific features
+  nxos_feature:
+    feature: "{{ item }}"
+    state: enabled
+  loop: "{{ features }}"
+  tags: features
+      

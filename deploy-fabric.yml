@@ -1,0 +1,7 @@
+---
+
+# Deploy the entire fabric by running each role-specific playbook
+
+- import_playbook: deploy-spine.yml
+- import_playbook: deploy-leaf.yml
+- import_playbook: deploy-border.yml

@@ -1,0 +1,74 @@
+---
+
+routerid: 10.10.255.45
+
+bgp:
+  asn: 65101
+  ibgp_peer: 10.10.255.46
+
+new_l3_interfaces:
+  - name: Ethernet1/43
+    ipv4: 
+      - address: 10.10.253.220/31
+  - name: Ethernet1/44
+    ipv4: 
+      - address: 10.10.253.222/31
+  - name: Ethernet1/49
+    ipv4: 
+      - address: 10.10.253.225/31
+  - name: Ethernet1/50
+    ipv4: 
+      - address: 10.10.253.227/31
+  - name: Ethernet1/51
+    ipv4: 
+      - address: 10.10.253.229/31
+  - name: Ethernet1/52
+    ipv4: 
+      - address: 10.10.253.231/31
+  - name: Loopback0
+    ipv4:
+      - address: "{{ routerid }}/32"
+
+interfaces:
+  Ethernet1/43:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.253.220/31
+  Ethernet1/44:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.253.222/31
+  Ethernet1/47:
+    admin_state: up
+    mtu: 9216
+    mode: layer2
+  Ethernet1/48:
+    admin_state: up
+    mtu: 9216
+    mode: layer2
+  Ethernet1/49:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.253.225/31
+  Ethernet1/50:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.253.227/31
+  Ethernet1/51:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.253.229/31
+  Ethernet1/52:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.253.231/31
+  Loopback0:
+    admin_state: up
+    interface_type: loopback
+    mode:

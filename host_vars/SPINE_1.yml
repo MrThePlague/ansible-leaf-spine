@@ -1,0 +1,62 @@
+---
+
+routerid: 10.10.255.51
+
+new_l3_interfaces:
+  - name: Ethernet1/1    
+    ipv4:
+      - address: 10.10.252.4/31
+  - name: Ethernet1/2    
+    ipv4:
+      - address: 10.10.252.16/31
+  - name: Ethernet1/13
+    ipv4:
+      - address: 10.10.252.172/31
+  - name: Ethernet1/14
+    ipv4:
+      - address: 10.10.252.184/31
+  - name: Ethernet1/35
+    ipv4:
+      - address: 10.10.253.224/31
+  - name: Ethernet1/36
+    ipv4:
+      - address: 10.10.253.236/31
+  - name: Loopback0
+    ipv4:
+      - address: "{{ routerid }}/32"
+
+interfaces:
+  Ethernet1/1:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.252.4/31
+  Ethernet1/2:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.252.16/31
+  Ethernet1/13:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.252.172/31
+  Ethernet1/14:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.252.184/31
+  Ethernet1/35:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.253.224/31
+  Ethernet1/36:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.253.236/31
+  Loopback0:
+    admin_state: up
+    interface_type: loopback
+    mode:

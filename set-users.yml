@@ -1,0 +1,14 @@
+---
+- name: Manage device usernames
+  hosts: all
+
+  tasks:
+  
+  - name: Change Password for configured local admin and remove all other users except `admin`
+    nxos_user:
+      name: "{{ local_admin_username }}"
+      configured_password:
+      role: network-admin
+      update_password: always
+      state: present
+      purge: yes

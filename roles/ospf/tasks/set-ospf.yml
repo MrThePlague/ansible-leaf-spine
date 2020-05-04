@@ -1,0 +1,36 @@
+---
+
+- name: Enable OSPF
+  nxos_ospf_vrf:
+    ospf: FABRIC
+    vrf: default
+    router_id: "{{ routerid }}"
+    auto_cost: "400000" #400 Gbps 
+    passive_interface: yes
+    log_adjacency: detail
+    state: present
+  tags: ospf
+
+- name: Enable OSPF on interfaces
+  nxos_interface_ospf:
+    interface: "{{ item.name }}"
+    ospf: FABRIC
+    area: 0.0.0.0
+    network: point-to-point
+    message_digest: yes
+    message_digest_algorithm_type: md5
+    message_digest_key_id: "1"
+    message_digest_encryption_type: 3des
+    message_digest_password: "{{ ospf_key }}"
+    passive_interface: "{{ 'false' if 'Ethernet' in item.name else 'true' if 'Vlan' in item.name else omit }}"
+    state: present
+  with_items:
+    - "{{ new_l3_interfaces }}"
+  tags: ospf, ospf_interfaces
+
+- name: Enable the OSPF process for BFD
+  nxos_config:
+    lines:
+      - bfd
+    parents: router ospf FABRIC
+  tags: ospf, bfd

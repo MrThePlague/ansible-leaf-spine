@@ -1,0 +1,14 @@
+---
+    
+# This conditional needs to get fixed
+- name: Disable auto-state on SVIs
+  nxos_config:
+    lines:
+      - no autostate
+    parents: "interface {{ item }}"
+  with_items:
+    - Vlan100
+    - Vlan200
+    - Vlan300
+    - Vlan400
+  tags: autostate

@@ -1,0 +1,15 @@
+---
+- hosts: all
+
+  tasks:
+  ###
+  # Collect serial numbers from devices and output to console
+  # 
+  - name: Gather hostname and serial for Fabric devices
+    nxos_facts:
+    when: ansible_network_os == 'nxos'
+
+  - debug:
+      msg:
+        - "Hostname: {{ ansible_net_hostname }}"
+        - "Serial: {{ ansible_net_serialnum }}"

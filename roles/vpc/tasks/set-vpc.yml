@@ -1,0 +1,45 @@
+---
+
+- name: Configure base vPC settings
+  nxos_vpc:
+    domain: "{{ item.key }}"
+    peer_gw: true
+    pkl_src: "{{ item.value.pkl_src }}"
+    pkl_dest: "{{ item.value.pkl_dest }}"
+    role_priority: "{{ item.value.role_priority }}"
+    system_priority: "{{ item.value.system_priority }}"
+    auto_recovery: true
+  with_dict: "{{ vpc }}"
+  tags: vpc
+
+- name: Set vPC peer-link member interfaces
+  nxos_interfaces:
+    config: "{{ new_interfaces }}"
+    state: merged
+  tags: interfaces, vpc
+
+# This section is because the new nxos_l2_interfaces module doesn't work correctly
+- name: Configure port-channel as trunk
+  nxos_config:
+    lines:
+      - switchport mode trunk
+    parents: "interface {{ item }}"
+  with_items:
+    - port-channel100
+    - Ethernet1/47
+    - Ethernet1/48
+  tags: vpc
+
+# The "Force" option doesn't work for the nxos_lag_interfaces yet
+- name: Configure port-channel for vPC Peer-Link
+  nxos_lag_interfaces:
+    config: "{{ lag_interfaces }}"
+    state: merged
+  tags: vpc
+
+- name: Configure vPC Peer-Link
+  nxos_vpc_interface:
+    portchannel: 100
+    peer_link: yes
+    state: present
+  tags: vpc

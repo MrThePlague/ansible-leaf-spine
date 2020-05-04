@@ -1,0 +1,60 @@
+---
+
+new_interfaces:
+  - name: Ethernet1/1
+    enabled: true
+    mtu: '9216' 
+  - name: Ethernet1/2
+    enabled: true
+    mtu: '9216'
+  - name: Ethernet1/13
+    enabled: true
+    mtu: '9216'
+  - name: Ethernet1/14
+    enabled: true
+    mtu: '9216'
+  - name: Ethernet1/35
+    enabled: true
+    mtu: '9216'
+  - name: Ethernet1/36
+    enabled: true
+    mtu: '9216'
+  - name: mgmt0
+    description: Management Interface
+    enabled: true
+  - name: Loopack0
+    description: Router ID
+    enabled: true
+
+bfd_interfaces:
+  - name: Ethernet1/1
+    bfd: enable
+    echo: enable
+  - name: Ethernet1/2
+    bfd: enable
+    echo: enable
+  - name: Ethernet1/13
+    bfd: enable
+    echo: enable
+  - name: Ethernet1/14
+    bfd: enable
+    echo: enable
+  - name: Ethernet1/35
+    bfd: enable
+    echo: enable
+  - name: Ethernet1/36
+    bfd: enable
+    echo: enable
+
+features:
+  - lldp
+  - scp-server
+  - ospf
+  - bfd
+
+snmp_traps:
+  - bfd
+  - lldp
+  - ospf
+  - system
+  - upgrade

@@ -1,0 +1,9 @@
+---
+- name: Save running-config to startup-config
+  hosts: all
+
+  tasks:
+
+    - name: Save running config if it's been modified since the last save
+      nxos_config:
+        save_when: modified

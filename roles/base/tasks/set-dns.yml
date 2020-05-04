@@ -1,0 +1,61 @@
+---
+###
+# Hostname
+#
+
+- name: Configure hostname based on inventory file
+  nxos_system:
+    hostname: "{{ inventory_hostname }}"
+  when: ansible_network_os == 'nxos'
+  tags: hostname
+
+###
+# Domain name
+#
+
+- name: Configure DNS domain name - NX-OS
+  nxos_system:
+    domain_name: "{{ domain_name }}"
+  when: ansible_network_os == 'nxos'
+  tags: dns
+
+###
+# DNS Servers
+#
+
+- name: Configure DNS servers - NX-OS
+  nxos_system:
+    name_servers:
+      - { server: "{{ name_servers[0] }}", vrf: management }
+      - { server: "{{ name_servers[1] }}", vrf: management }
+  when: ansible_network_os == 'nxos'
+  tags: dns
+
+###
+# Domain Search List
+#
+
+- name: Configure domain search - NX-OS
+  nxos_system:
+    domain_search: 
+      - "{{ domain_search[0] }}"
+      - "{{ domain_search[1] }}"
+    state: present
+  when: ansible_network_os == 'nxos'
+  tags: dns
+
+###
+# Verify DNS resolution
+# 
+
+- name: Verifying DNS resolution to Internal resources
+  nxos_ping:
+    dest: internal.example.org
+    vrf: management
+  when: ansible_network_os == 'nxos'
+
+- name: Verifying DNS resolution to External resources
+  nxos_ping:
+    dest: www.google.ca
+    vrf: management
+  when: ansible_network_os == 'ios'

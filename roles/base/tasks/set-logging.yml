@@ -1,0 +1,16 @@
+---
+
+# These tasks will always show as "changed"
+- name: Configure remote logging destination
+  nxos_config:
+    lines:
+      - "logging server {{ item.value.hostname }} {{ item.value.level }} port {{ item.value.port }} use-vrf {{ item.value.vrf }}"
+  with_dict:
+      - "{{ syslog }}"
+  tags: syslog
+
+- name: Set logging origin-id
+  nxos_config:
+    lines:
+      - logging origin-id hostname
+  tags: syslog

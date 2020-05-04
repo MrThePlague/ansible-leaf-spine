@@ -1,0 +1,18 @@
+---
+
+- name: Enable resilient hashing of ECMP traffic
+  nxos_config:
+    lines:
+      - hardware profile ecmp resilient
+
+- name: Set default switchport state to down
+  nxos_config:
+    lines:
+      - system default switchport shutdown
+    defaults: yes
+
+- name: Set default switchport state Layer3
+  nxos_config:
+    lines:
+      - no system default switchport
+    defaults: yes

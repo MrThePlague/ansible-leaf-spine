@@ -1,0 +1,11 @@
+---
+
+vlans:
+  - vlan_id: 100
+    name: TUNNEL_ENDPOINT
+  - vlan_id: 200
+    name: VSPHERE_MGMT
+  - vlan_id: 300
+    name: STORAGE_REPLICATION
+  - vlan_id: 400
+    name: vMOTION

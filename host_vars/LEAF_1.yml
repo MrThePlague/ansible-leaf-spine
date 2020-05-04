@@ -1,0 +1,126 @@
+---
+
+routerid: 10.10.255.11
+
+new_l3_interfaces:
+  - name: Ethernet1/43
+    ipv4: 
+      - address: 10.10.252.0/31
+  - name: Ethernet1/44
+    ipv4: 
+      - address: 10.10.252.2/31
+  - name: Ethernet1/49
+    ipv4: 
+      - address: 10.10.252.5/31
+  - name: Ethernet1/50
+    ipv4:
+      - address: 10.10.252.7/31
+  - name: Ethernet1/51
+    ipv4: 
+      - address: 10.10.252.9/31
+  - name: Ethernet1/52
+    ipv4: 
+      - address: 10.10.252.11/31
+  - name: Loopback0
+    ipv4: 
+      - address: "{{ routerid }}/32"
+  - name: Vlan100
+    ipv4: 
+      - address: 10.10.0.2/24
+  - name: Vlan200
+    ipv4: 
+      - address: 10.10.1.2/24
+  - name: Vlan300
+    ipv4: 
+      - address: 10.10.2.2/24
+  - name: Vlan400
+    ipv4: 
+      - address: 10.10.3.2/24
+
+
+interfaces:
+  Ethernet1/43:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.252.0/31
+  Ethernet1/44:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.252.2/31
+  Ethernet1/47:
+    admin_state: up
+    mtu: 9216
+    mode: layer2
+  Ethernet1/48:
+    admin_state: up
+    mtu: 9216
+    mode: layer2
+  Ethernet1/49:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.252.5/31
+  Ethernet1/50:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.252.7/31
+  Ethernet1/51:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.252.9/31
+  Ethernet1/52:
+    admin_state: up
+    mtu: 9216
+    mode: layer3
+    ipv4: 10.10.252.11/31
+  Loopback0:
+    admin_state: up
+    interface_type: loopback
+    mode:
+  Vlan100:
+    description: TEP - 10.10.0.0/24
+    admin_state: up
+    mtu: 9216
+    mode: svi
+    ipv4: 10.10.0.2/24
+    hsrp_group: 100
+    hsrp_vip: 10.10.0.1
+    hsrp_priority: 150
+  Vlan200:
+    description: vSphere Management - 10.10.1.0/24
+    admin_state: up
+    mtu: 9216
+    mode: svi
+    ipv4: 10.10.1.2/24
+    hsrp_group: 200
+    hsrp_vip: 10.10.1.1
+    hsrp_priority: 150
+  Vlan300:
+    description: Storage Replication - 10.10.2.0/24
+    admin_state: up
+    mtu: 9216
+    mode: svi
+    ipv4: 10.10.2.2/24
+    hsrp_group: 300
+    hsrp_vip: 10.10.2.1
+    hsrp_priority: 150
+  Vlan400:
+    description: vMotion - 10.10.3.0/24
+    admin_state: up
+    mtu: 9216
+    mode: svi
+    ipv4: 10.10.3.2/24
+    hsrp_group: 400
+    hsrp_vip: 10.10.3.1
+    hsrp_priority: 150
+vpc:
+  100: 
+    role_priority: 1000
+    system_priority: 32667
+    pkl_src: 10.255.1.11
+    pkl_dest: 10.255.1.12
+    pkl_vrf: management

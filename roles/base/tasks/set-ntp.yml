@@ -1,0 +1,13 @@
+---
+- name: Ensure DST is disabled
+  nxos_config:
+    lines:
+      - no clock summer-time
+    defaults: yes
+    
+- name: Set NTP
+  nxos_ntp:
+    server: "{{ item }}"
+    vrf_name: "management"
+  loop: "{{ ntp_servers }}"
+  tags: ntp

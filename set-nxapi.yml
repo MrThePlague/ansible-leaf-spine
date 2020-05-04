@@ -1,0 +1,10 @@
+---
+- name: Enable the NXAPI on Fabric switches
+  hosts: leaf,spine,border
+
+  tasks:
+
+   - name: Enable NXAPI with no HTTP
+     nxos_nxapi:
+        enable_http: false
+        https: yes

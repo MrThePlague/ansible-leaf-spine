@@ -1,0 +1,14 @@
+---
+
+- name: Configure HSRP
+  nxos_hsrp:
+    group: "{{ item.value.hsrp_group }}"
+    vip: "{{ item.value.hsrp_vip }}"
+    interface: "{{ item.key }}"
+    priority: "{{ item.value.hsrp_priority }}"
+    version: "2"
+    state: present
+  with_dict:
+    - "{{ interfaces }}"
+  when:  item.value.mode == "svi"
+  tags: hsrp

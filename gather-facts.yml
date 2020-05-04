@@ -1,0 +1,24 @@
+---
+- hosts: all
+
+  tasks:
+  ###
+  # Collect data from devices and output to JSON file
+  # 
+  - name: Gather facts for Fabric devices
+    nxos_facts:
+      gather_subset: '!config'
+      gather_network_resources:
+        - bfd_interfaces
+        - vlans
+        - lacp
+        - lacp_interfaces
+        - lag_interfaces
+        - interfaces
+        - l3_interfaces
+        - l2_interfaces
+    register: output
+    when: ansible_network_os == 'nxos'
+
+  - name: Output facts to file
+    copy: content="{{ output | to_nice_yaml }}" dest="facts/{{ansible_net_hostname}}_facts.yaml"

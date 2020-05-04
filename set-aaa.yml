@@ -1,0 +1,21 @@
+---
+- name: Configure AAA for Identity Services Engine
+  gather_facts: no
+
+  tasks:
+
+  - name: "Configure base settings for ISE TACACS+"
+    nxos_aaa_server:
+        server_type: tacacs
+        server_timeout: 8
+        deadtime: 19
+        directed_request: disabled
+
+  - name: "Tacacs Server Host Configuration"
+      nxos_aaa_server_host:
+        state: present
+        server_type: tacacs
+        tacacs_port: 89
+        host_timeout: 10
+        address: "{{ item.value.servers }}"
+      with_dict: "{{ tacacs }}"

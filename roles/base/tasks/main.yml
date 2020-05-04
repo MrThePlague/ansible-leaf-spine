@@ -1,0 +1,20 @@
+---
+
+- name: Gather facts for Fabric devices
+  nxos_facts:
+    gather_network_resources:
+      - interfaces
+      - l3_interfaces
+      - l2_interfaces
+      - bfd_interfaces
+  when: ansible_network_os == 'nxos'
+  tags: interfaces, int_descriptions
+
+- include: set-bootstrap.yml
+- include: set-dns.yml
+- include: set-features.yml
+- include: set-ntp.yml
+- include: set-snmp.yml
+- include: set-logging.yml
+- include: set-interfaces.yml
+- include: set-l3-interfaces.yml

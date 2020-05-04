@@ -1,0 +1,4 @@
+---
+
+- include: set-hsrp.yml
+- include: set-autostate.yml

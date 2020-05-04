@@ -1,0 +1,37 @@
+---
+- name: Bulk upgrade of NX-OS software on Fabric switches
+  hosts: all
+  
+  tasks:
+  ###
+  # Work still needs to be done to perform rolling upgrades by initiating a GIR and doing pod switches in serial
+  #
+    - name: Ensure that the running-configuration has been saved to memory
+      nxos_config:
+        save_when: modified
+
+    - name: "copy from server to device"
+      nxos_file_copy:
+        local_file: "~/nxos.7.0.3.I7.6.bin"
+        remote_file: "nxos.7.0.3.I7.6.bin"
+
+    - name: Install OS on N9k
+      check_mode: no
+      nxos_install_os:
+        system_image_file: nxos.7.0.3.I7.6.bin
+
+    - name: Wait for device to come back up with new image
+      wait_for:
+        port: 22
+        state: started
+        timeout: 500
+        delay: 60
+        host: "{{ inventory_hostname }}"
+
+    - name: Check installed OS for newly installed version
+      nxos_command:
+        commands: ['show version | json']
+      register: output
+    - assert:
+        that:
+        - output['stdout'][0]['kickstart_ver_str'] == '7.0(3)I7(6)'

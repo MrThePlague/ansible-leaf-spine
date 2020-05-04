@@ -1,0 +1,7 @@
+---
+
+# Configure Spine Switches
+- hosts: spine
+  roles:
+    - base
+    - ospf

@@ -1,0 +1,39 @@
+---
+
+new_interfaces:
+  - name: Ethernet1/47
+    description: vPC Peer-Link - Member Interface
+    enabled: true
+    mode: layer2
+    mtu: '9216'
+  - name: Ethernet1/48
+    description: vPC Peer-Link - Member Interface
+    enabled: true
+    mode: layer2
+    mtu: '9216'
+  - name: port-channel100
+    description: vPC Peer-Link
+    enabled: true
+    mode: layer2
+    mtu: '9216'
+
+l2_interfaces:
+  - name: Ethernet1/47
+    trunk:
+      allowed_vlans: 100,200,300,400
+  - name: Ethernet1/48
+    trunk:
+      allowed_vlans: 100,200,300,400
+  - name: port-channel100
+    trunk:
+      allowed_vlans: 100,200,300,400
+
+lag_interfaces:
+  - name: port-channel100
+    members:
+      - member: Ethernet1/47
+        #force: yes ## Force mode does not currently work correctly in 2.9.0
+        mode: active
+      - member: Ethernet1/48
+        #force: yes ## Force mode does not currently work correctly in 2.9.0
+        mode: active

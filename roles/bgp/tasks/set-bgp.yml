@@ -1,0 +1,50 @@
+---
+
+- name: Enable BGP
+  nxos_bgp:
+    asn: "{{ bgp.asn }}"
+    fast_external_fallover: yes
+    graceful_restart: yes
+    log_neighbor_changes: yes
+    router_id: "{{ routerid }}"
+    state: present
+  tags: bgp
+
+- name: Configure IPv4 address family
+  nxos_bgp_af:
+    asn: "{{ bgp.asn }}"
+    afi: ipv4
+    safi: unicast
+    maximum_paths: 4
+    maximum_paths_ibgp: 2
+    additional_paths_receive: no
+    additional_paths_send: no
+    additional_paths_install: no
+    networks:
+      - 10.10.1.0/24
+      - 10.10.49.0/24
+  tags: bgp
+
+- name: Configure iBGP Peer
+  nxos_bgp_neighbor:
+    asn: "{{ bgp.asn }}"
+    neighbor: "{{ bgp.ibgp_peer }}"
+    remote_as: "{{ bgp.asn }}"
+    bfd: disable
+    description: "Border Switch"
+    update_source: Loopback0
+    pwd: "{{ bgp_key }}"
+    pwd_type: cisco_type_7
+    state: present
+  tags: bgp, ibgp
+
+- name: Configure iBGP Peer address family
+  nxos_bgp_neighbor_af:
+    asn: "{{ bgp.asn }}"
+    afi: ipv4
+    safi: unicast
+    vrf: default
+    neighbor: "{{ bgp.ibgp_peer }}"
+    next_hop_self: yes
+    state: present
+  tags: bgp, ibgp

@@ -1,0 +1,11 @@
+---
+- name: Backup the running-configuration
+  hosts: all
+
+  tasks:
+
+    - name: Save the running-configuration to ./configs
+      nxos_config:
+        backup: yes
+        backup_options:
+          dir_path: configs/
